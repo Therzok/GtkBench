@@ -4,30 +4,24 @@ using Gtk;
 
 namespace GtkBench
 {
-	class MainClass
+	partial class Tests
 	{
-		static void AddSignalStressTestButton(VBox box)
-		{
-			var btn = new Button
-			{
-				Label = "Signal Stress",
-				HeightRequest = 200,
-				WidthRequest = 200,
-			};
-			btn.Clicked += (sender, e) =>
-			{
-				for (int i = 0; i < 100000; ++i)
-					GLib.Signal.Emit(btn, "enter");
-			};
-			btn.Entered += (sender, e) =>
-			{
-			};
-			box.Add(btn);
-		}
-
 		static void AddStressTestButtons(VBox box)
 		{
 			AddSignalStressTestButton(box);
+			AddListTestButton(box);
+		}
+
+		static Button MakeButton(string label, EventHandler clickHandler)
+		{
+			var btn = new Button
+			{
+				Label = label,
+				HeightRequest = 200,
+				WidthRequest = 200,
+			};
+			btn.Clicked += clickHandler;
+			return btn;
 		}
 
 		public static void Main(string[] args)
